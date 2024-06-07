@@ -204,6 +204,10 @@ namespace SharpFont
 		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
 		public static IntPtr GetFileFromMacName(string fontName, out int faceIndex)
 		{
+			if (!IsMacOS)
+				throw new InvalidOperationException(
+					$"{nameof(GetFileFromMacName)} can only be called on macOS.");
+
 			IntPtr fsspec;
 
 			Error err = FT_GetFile_From_Mac_Name(fontName, out fsspec, out faceIndex);
@@ -222,6 +226,10 @@ namespace SharpFont
 		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
 		public static IntPtr GetFileFromMacAtsName(string fontName, out int faceIndex)
 		{
+			if (!IsMacOS)
+				throw new InvalidOperationException(
+					$"{nameof(GetFileFromMacAtsName)} can only be called on macOS.");
+
 			IntPtr fsspec;
 
 			Error err = FT_GetFile_From_Mac_ATS_Name(fontName, out fsspec, out faceIndex);
@@ -243,6 +251,10 @@ namespace SharpFont
 		/// <returns>Index of the face. For passing to <see cref="Library.NewFace"/>.</returns>
 		public static unsafe int GetFilePathFromMacAtsName(string fontName, byte[] path)
 		{
+			if (!IsMacOS)
+				throw new InvalidOperationException(
+					$"{nameof(GetFilePathFromMacAtsName)} can only be called on macOS.");
+
 			int faceIndex;
 
 			fixed (void* ptr = path)
